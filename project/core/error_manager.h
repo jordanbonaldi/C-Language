@@ -61,7 +61,7 @@ CREATE_FUNCTION_PARAMS(void, error, Error error)
 		CALL_FUNCTION_PARAMS(getErrorAsString, error),
 		error.code);
 	perror("Stack:");
-	CALL_FUNCTION_LINKED(__EXIT);
+	CALL_FUNCTION(__EXIT);
 }
 
 # endif

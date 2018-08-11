@@ -113,7 +113,7 @@ CREATE_FUNCTION_PARAMS(Times *, TimeConverter, int sec)
 
 	__MALLOC__(_time->time, sizeof(struct timespec))
 
-	_(double a = (sec / (double)(this->params->freq)) * 1000000)
+	_(double a = (sec / 1000000))
 
 	_(_time_attr x = (_time_attr)a)
 

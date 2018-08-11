@@ -34,20 +34,37 @@
 
 # include "function_manager.h"
 
-# include "iterator_manager.h"
+# define MAIN_STRUCT DefaultObj
+
+# include "definition.h"
+
+CREATE_FUNCTION(void, __EXIT)
+{
+	exit(EXIT_SUCCESS);
+}
 
 # include "error_manager.h"
 
+# include "iterator_manager.h"
+
 # include "socket_manager.h"
-
-# include "static_errors.h"
-
-# include "static_messages.h"
 
 # include "timeutils.h"
 
 # include "callback.h"
 
 # include "test_manager.h"
+
+# include "socket_manager.h"
+
+# include "buffer.h"
+
+# include "commands_queue.h"
+
+__LAUNCH__(int)
+{
+	printf("toto\n");
+	return 0;
+}
 
 #endif

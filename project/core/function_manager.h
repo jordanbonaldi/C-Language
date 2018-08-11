@@ -25,9 +25,9 @@
 	type PRE_FUNC_NAME##name(__attribute__((unused))CREATE_ARGS,\
 			__attribute__((unused))params)
 
-# define __LAUNCH__(type, name) type name(__attribute__((unused))\
+# define __LAUNCH__(type) type main(__attribute__((unused))\
 					const int argc, \
-					char **argv)
+					__attribute__((unused)) char **argv)
 
 # define CREATE_FUNCTION_NEUTRAL(type, name) type name()
 

@@ -8,7 +8,7 @@
 # ifndef QUEUE_HH
 	# define QUEUE_HH
 
-# include "server.h"
+# include "project.h"
 
 OBJECT_CREATOR
 (

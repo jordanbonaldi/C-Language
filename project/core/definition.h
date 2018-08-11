@@ -25,6 +25,9 @@
 	OBJECT_DEFINE(Times);
 	OBJECT_DEFINE(TimeManager);
 	OBJECT_DEFINE(Tests);
+	OBJECT_DEFINE(DefaultObj);
+	OBJECT_DEFINE(Buffer);
+	OBJECT_DEFINE(Container);
 
 /*
 	End pre processing definition
@@ -32,11 +35,24 @@
 
 OBJECT_CREATOR
 (
+	DefaultObj,
+
+	void *data;
+
+	Socket *socket;
+	TimeManager *time;
+	Buffer *buffer;
+	Container *queue;
+	Tests *tests;
+)
+
+OBJECT_CREATOR
+(
 	Unknown,
 
 	void *alpha;
 	void *beta;
-);
+)
 
 # define setUnknown(a, b) (Unknown) {\
 				.alpha = a,\
