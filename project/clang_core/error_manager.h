@@ -8,8 +8,7 @@
 # ifndef ERROR_HANDLER_HH
 	# define ERROR_HANDLER_HH
 
-# include "project.h"
-
+# include "clang.h"
 enum s_status
 {
 	LOW,

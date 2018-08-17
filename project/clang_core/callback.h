@@ -8,8 +8,7 @@
 # ifndef CALLBACK_HH
 	# define CALLBACK_HH
 
-
-# include "project.h"
+# include "clang.h"
 
 OBJECT_CREATOR
 (

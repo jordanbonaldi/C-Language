@@ -8,8 +8,7 @@
 # ifndef QUEUE_HH
 	# define QUEUE_HH
 
-# include "project.h"
-
+# include "clang.h"
 OBJECT_CREATOR
 (
 	Container,

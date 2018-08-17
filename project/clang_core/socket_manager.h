@@ -8,8 +8,7 @@
 # ifndef SOCKET_HH
 	# define SOCKET_HH
 
-# include "project.h"
-
+# include "clang.h"
 OBJECT_CREATOR
 (
 	Socket,

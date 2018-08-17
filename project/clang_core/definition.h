@@ -28,6 +28,7 @@
 	OBJECT_DEFINE(DefaultObj);
 	OBJECT_DEFINE(Buffer);
 	OBJECT_DEFINE(Container);
+	OBJECT_DEFINE(DefaultObj);
 
 /*
 	End pre processing definition

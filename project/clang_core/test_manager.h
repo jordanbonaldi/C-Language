@@ -8,7 +8,7 @@
 # ifndef TEST_JORDYTERION_HH
 	# define TEST_JORDYTERION_HH
 
-# include "project.h"
+# include "clang.h"
 
 OBJECT_CREATOR
 (

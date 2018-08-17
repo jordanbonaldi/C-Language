@@ -8,7 +8,7 @@
 # ifndef BUFFER_HH
 	# define BUFFER_HH
 
-# include "project.h"
+# include "clang.h"
 
 # define MAX_SIZE 4096
 

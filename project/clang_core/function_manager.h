@@ -21,13 +21,28 @@
 # define CREATE_FUNCTION(type, name) type PRE_FUNC_NAME##name(\
 				__attribute__((unused))CREATE_ARGS)
 
+# define public_function(type, name) type PRE_FUNC_NAME##name(\
+				__attribute__((unused))CREATE_ARGS)
+
+# define private_function(type, name) static type PRE_FUNC_NAME##name(\
+				__attribute__((unused))CREATE_ARGS)
+
+# define private_function_params(type, name, params) \
+	static type PRE_FUNC_NAME##name(__attribute__((unused))CREATE_ARGS,\
+			__attribute__((unused))params)
+
+# define public_function_params(type, name, params) \
+	type PRE_FUNC_NAME##name(__attribute__((unused))CREATE_ARGS,\
+			__attribute__((unused))params)
+
 # define CREATE_FUNCTION_PARAMS(type, name, params) \
 	type PRE_FUNC_NAME##name(__attribute__((unused))CREATE_ARGS,\
 			__attribute__((unused))params)
 
-# define __LAUNCH__(type) type main(__attribute__((unused))\
-					const int argc, \
-					__attribute__((unused)) char **argv)
+# define __launch__(type) type launcher(\
+					__attribute__((unused))CREATE_ARGS,\
+					__attribute__((unused))const int argc, \
+					__attribute__((unused))char **argv)
 
 # define CREATE_FUNCTION_NEUTRAL(type, name) type name()
 
@@ -36,11 +51,16 @@
 # define CREATE_FUNCTION_VARIADIC(type, name, params, ...) \
 	type PRE_FUNC_NAME##name(CREATE_ARGS, params, __VA_ARGS__)
 
+# define call(name) PRE_FUNC_NAME##name(PARAM_NAMED)
+
 # define CALL_FUNCTION(name) PRE_FUNC_NAME##name(PARAM_NAMED)
 
 # define CALL_FUNCTION_LINKED(name) name(PARAM_NAMED)
 
 # define CALL_FUNCTION_LINKED_PASSED(name) name(&PARAM_NAMED)
+
+# define call_params(name, param) \
+		PRE_FUNC_NAME##name(PARAM_NAMED, param)
 
 # define CALL_FUNCTION_PARAMS(name, param) \
 		PRE_FUNC_NAME##name(PARAM_NAMED, param)
@@ -51,7 +71,7 @@
 # define CALL_FUNCTION_VARIADIC(name, param, ...) \
 	PRE_FUNC_NAME##name(PARAM_NAMED, param, __VA_ARGS__)
 
-# define GET_FUNCTION(name) PRE_FUNC_NAME##name
+# define get(name) PRE_FUNC_NAME##name
 
 # define CALL_FUNCTION_AS_PASS(name) PRE_FUNC_NAME##name(&PARAM_NAMED);
 
@@ -66,5 +86,14 @@
 
 # define EXEC_FUNC(ret, func)\
 		({ ret __fn__ func __fn__; })
+
+# define static_main(type) type main(\
+					__attribute__((unused)) const int argc, \
+					__attribute__((unused)) char **argv) {\
+							__MALLOC_CR__(MAIN_STRUCT, this, sizeof(MAIN_STRUCT))\
+							type t = launcher(this, argc, argc);\
+							free(this);\
+							return t;\
+					}
 
 #endif

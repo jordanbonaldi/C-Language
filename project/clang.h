@@ -30,41 +30,35 @@
 
 // PROJECT'S INCLUDES
 
-# include "anticipator.h"
+# include "clang_core/definition.h"
 
-# include "function_manager.h"
+# include "clang_core/function_manager.h"
 
 # define MAIN_STRUCT DefaultObj
 
-# include "definition.h"
+# include "clang_core/anticipator.h"
 
 CREATE_FUNCTION(void, __EXIT)
 {
 	exit(EXIT_SUCCESS);
 }
 
-# include "error_manager.h"
+# include "clang_core/error_manager.h"
 
-# include "iterator_manager.h"
+# include "clang_core/iterator_manager.h"
 
-# include "socket_manager.h"
+# include "clang_core/socket_manager.h"
 
-# include "timeutils.h"
+# include "clang_core/timeutils.h"
 
-# include "callback.h"
+# include "clang_core/callback.h"
 
-# include "test_manager.h"
+# include "clang_core/test_manager.h"
 
-# include "socket_manager.h"
+# include "clang_core/socket_manager.h"
 
-# include "buffer.h"
+# include "clang_core/buffer.h"
 
-# include "commands_queue.h"
-
-__LAUNCH__(int)
-{
-	printf("toto\n");
-	return 0;
-}
+# include "clang_core/commands_queue.h"
 
 #endif

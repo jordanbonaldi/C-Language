@@ -8,7 +8,7 @@
 # ifndef ANTICIPATOR_HH
 	# define ANTICIPATOR_HH
 
-# include "project.h"
+# include "clang.h"
 
 # define ASSIGN(a, b) a ?: a = b;
 

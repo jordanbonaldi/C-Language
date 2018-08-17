@@ -8,7 +8,7 @@
 # ifndef TIME_HH
 	# define TIME_HH
 
-# include "project.h"
+# include "clang.h"
 
 OBJECT_CREATOR
 (
