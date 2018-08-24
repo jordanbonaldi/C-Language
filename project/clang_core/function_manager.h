@@ -41,7 +41,7 @@
 
 # define __launch__(type) type launcher(\
 					__attribute__((unused))CREATE_ARGS,\
-					__attribute__((unused))const int argc, \
+					__attribute__((unused))const int argc,\
 					__attribute__((unused))char **argv)
 
 # define CREATE_FUNCTION_NEUTRAL(type, name) type name()
@@ -59,13 +59,13 @@
 
 # define CALL_FUNCTION_LINKED_PASSED(name) name(&PARAM_NAMED)
 
-# define call_params(name, param) \
+# define call_params(name, param)\
 		PRE_FUNC_NAME##name(PARAM_NAMED, param)
 
-# define CALL_FUNCTION_PARAMS(name, param) \
+# define CALL_FUNCTION_PARAMS(name, param)\
 		PRE_FUNC_NAME##name(PARAM_NAMED, param)
 
-# define CALL_FUNCTION_PARAMS_AS_PASS(name, param) \
+# define CALL_FUNCTION_PARAMS_AS_PASS(name, param)\
 		PRE_FUNC_NAME##name(&PARAM_NAMED, param)
 
 # define CALL_FUNCTION_VARIADIC(name, param, ...) \
@@ -75,7 +75,7 @@
 
 # define CALL_FUNCTION_AS_PASS(name) PRE_FUNC_NAME##name(&PARAM_NAMED);
 
-# define CREATE_FUNCTION_WITH_REGISTER(name, strname, register, func) \
+# define CREATE_FUNCTION_WITH_REGISTER(name, strname, register, func)\
 		register(strname, GET_FUNCTION(name))
 
 # define CALL_ANY(caller, args) caller(PARAM_NAMED, args)
@@ -87,13 +87,13 @@
 # define EXEC_FUNC(ret, func)\
 		({ ret __fn__ func __fn__; })
 
-# define static_main(type) type main(\
-					__attribute__((unused)) const int argc, \
-					__attribute__((unused)) char **argv) {\
-							__MALLOC_CR__(MAIN_STRUCT, this, sizeof(MAIN_STRUCT))\
-							type t = launcher(this, argc, argc);\
-							free(this);\
-							return t;\
-					}
+# define static_main(type) type main(__attribute__((unused)) const int argc,\
+				     __attribute__((unused)) char **argv\
+			     ) {\
+					new(MAIN_STRUCT, this, sizeof(MAIN_STRUCT))\
+					type t = launcher(this, argc, argc);\
+					free(this);\
+					return t;\
+				}
 
 #endif

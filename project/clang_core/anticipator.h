@@ -32,12 +32,22 @@
 
 # define __MALLOC_CR__(attr, name, size) attr * name = malloc(size);\
 				{\
-					__(name, CRITICAL, 1);\
+					_(__(name, CRITICAL, 1));\
 				}
 
 # define __MALLOC__(attr, size) attr = malloc(size);\
 				{\
-					__(attr, CRITICAL, 1);\
+					_(__(attr, CRITICAL, 1));\
+				}
+
+# define new(attr, name, size) attr * name = malloc(size);\
+				{\
+					_(__(name, CRITICAL, 1));\
+				}
+
+# define alloc(attr, size) attr = malloc(size);\
+				{\
+					_(__(attr, CRITICAL, 1));\
 				}
 
 # endif

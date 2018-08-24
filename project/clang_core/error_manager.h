@@ -9,6 +9,7 @@
 	# define ERROR_HANDLER_HH
 
 # include "clang.h"
+
 enum s_status
 {
 	LOW,
@@ -23,12 +24,13 @@ OBJECT_CREATOR
 
 	int code;
 	Status status;
-);
+)
 
-# define setError(b, c) (Error) { \
-				.code = b, \
+# define setError(b, c) (Error) {\
+				.code = b,\
 				.status = c\
 			}
+
 # define __(a, b, c) \
 	!a ? CALL_FUNCTION_PARAMS(error, setError(b, c)) : 0
 

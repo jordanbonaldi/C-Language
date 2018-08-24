@@ -16,7 +16,7 @@ OBJECT_CREATOR
 
 	String str;
 	void (*action)(void *);
-);
+)
 
 # define setCallBack(s, func) (CallBack) { \
 			.str = s,\

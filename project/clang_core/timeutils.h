@@ -16,7 +16,7 @@ OBJECT_CREATOR
 
 	struct timespec *time;
 	bool refresh;
-);
+)
 
 OBJECT_CREATOR
 (
@@ -25,7 +25,7 @@ OBJECT_CREATOR
 	Times *timeout;
 	Times *now_io;
 	Times *now_pl;
-);
+)
 
 # define _now_io this->time->now_io
 

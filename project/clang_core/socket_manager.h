@@ -9,6 +9,7 @@
 	# define SOCKET_HH
 
 # include "clang.h"
+
 OBJECT_CREATOR
 (
 	Socket,
@@ -22,7 +23,7 @@ OBJECT_CREATOR
 	struct sockaddr_in addr;
 
 	bool connection;
-);
+)
 
 CREATE_FUNCTION_PARAMS(void, setIp, String ip)
 {

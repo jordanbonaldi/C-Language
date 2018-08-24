@@ -9,6 +9,7 @@
 	# define QUEUE_HH
 
 # include "clang.h"
+
 OBJECT_CREATOR
 (
 	Container,
