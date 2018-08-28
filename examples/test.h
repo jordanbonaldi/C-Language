@@ -24,7 +24,7 @@ private function(tar *, init)
 	return toto;
 }
 
-import main(int, init)
+import main(int, NULL)
 
 public function(void, test, String string)
 {
@@ -38,10 +38,7 @@ private function(void, toto)
 
 default(int)
 {
-	call(toto);
-	call(test, use a);
-
-	call(test, use b);
+	printf("tt");
 
 	return 0;
 }

@@ -45,11 +45,11 @@
 # define EXEC_FUNC(ret, func)\
 		({ ret __fn__ func __fn__; })
 
-# define main(type, oj) type main(__attribute__((unused)) const int argc,\
+# define main(type, ...) type main(__attribute__((unused)) const int argc,\
 				__attribute__((unused)) char **argv\
 			) {\
 					new(MAIN_STRUCT, this, sizeof(MAIN_STRUCT))\
-					Object *obj = call(oj);\
+					Object *obj = __VA_ARGS__;\
 					setDefault(obj)\
 					type t = launcher(this, argc, argc);\
 					free(obj);\
