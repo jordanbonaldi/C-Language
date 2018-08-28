@@ -27,12 +27,13 @@ OBJECT_CREATOR
 )
 
 # define addQueue(name, queue) \
-		CALL_FUNCTION_PARAMS(addQueue, \
+		call(addQueue, \
 				setUnknown(queue, name))
 
-# define sizeQueue(size) CALL_FUNCTION_PARAMS(QueueSize, size)
+# define sizeQueue(size) call(QueueSize, size)
 
-CREATE_FUNCTION_PARAMS(void, removeFirst, Container *container)
+
+public function(void, removeFirst, Container *container)
 {
 	_(Queue *actual = container->contained)
 	_(Queue *tmp = ((Queue *)container->contained)->next)
@@ -43,7 +44,8 @@ CREATE_FUNCTION_PARAMS(void, removeFirst, Container *container)
 	_(container->contained = tmp)
 }
 
-CREATE_FUNCTION_PARAMS(int, QueueSize, Queue *queue)
+
+public function(int, QueueSize, Queue *queue)
 {
 	_(int $i = 0)
 
@@ -62,7 +64,8 @@ CREATE_FUNCTION_PARAMS(int, QueueSize, Queue *queue)
 	__return($i)
 }
 
-CREATE_FUNCTION_PARAMS(void, addQueue, Unknown unknown)
+
+public function(void, addQueue, Unknown unknown)
 {
 	_get(Container, _queue, alpha);
 	_get(char, __name, beta);
@@ -87,7 +90,8 @@ CREATE_FUNCTION_PARAMS(void, addQueue, Unknown unknown)
 	}
 }
 
-CREATE_FUNCTION_PARAMS(void, destroyQueue, Container *container)
+
+public function(void, destroyQueue, Container *container)
 {
 	Queue *queue = container->contained;
 

@@ -32,15 +32,15 @@ OBJECT_CREATOR
 			}
 
 # define __(a, b, c) \
-	!a ? CALL_FUNCTION_PARAMS(error, setError(b, c)) : 0
+	!a ? call(error, setError(b, c)) : 0
 
 # define _N_(a, b, c) \
-	a < 0 ? CALL_FUNCTION_PARAMS(error, setError(b, c)) : 0
+	a < 0 ? call(error, setError(b, c)) : 0
 
 # define _NQ_(a, b, c) \
-		a <= 0 ? CALL_FUNCTION_PARAMS(error, setError(b, c)) : 0
+		a <= 0 ? call(error, setError(b, c)) : 0
 
-CREATE_FUNCTION_PARAMS(String, getErrorAsString, Error error)
+public function(String, getErrorAsString, Error error)
 {
 	__UNUSED__;
 	switch (error.status)
@@ -55,14 +55,14 @@ CREATE_FUNCTION_PARAMS(String, getErrorAsString, Error error)
 	return "NONE";
 }
 
-CREATE_FUNCTION_PARAMS(void, error, Error error)
+public function(void, error, Error error)
 {
 	__UNUSED__;
 	printf("[%s] Unexpected error happened : %d\n",
-		CALL_FUNCTION_PARAMS(getErrorAsString, error),
+		call(getErrorAsString, error),
 		error.code);
 	perror("Stack:");
-	CALL_FUNCTION(__EXIT);
+	call(__EXIT);
 }
 
 # endif

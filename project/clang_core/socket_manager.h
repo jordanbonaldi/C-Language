@@ -25,22 +25,22 @@ OBJECT_CREATOR
 	bool connection;
 )
 
-CREATE_FUNCTION_PARAMS(void, setIp, String ip)
+public function(void, setIp, String ip)
 {
 	this->socket->ip = ip;
 }
 
-CREATE_FUNCTION_PARAMS(void, setPort, int port)
+public function(void, setPort, int port)
 {
 	this->socket->port = port;
 }
 
-CREATE_FUNCTION_PARAMS(void, setAddr, in_addr_t addr)
+public function(void, setAddr, in_addr_t addr)
 {
 	this->socket->addr.sin_addr.s_addr = addr;
 }
 
-CREATE_FUNCTION(void, initPreConnectionEvent)
+public function(void, initPreConnectionEvent)
 {
 	this->socket = malloc(sizeof(Socket));
 	__(this->socket, 1, CRITICAL);
@@ -48,7 +48,7 @@ CREATE_FUNCTION(void, initPreConnectionEvent)
 	this->socket->port = -1;
 }
 
-CREATE_FUNCTION(void, preConnectionEvent)
+public function(void, preConnectionEvent)
 {
 	this->socket->id = socket(AF_INET, SOCK_STREAM, 0);
 	_N_(this->socket->id, 6, CRITICAL);
@@ -58,14 +58,14 @@ CREATE_FUNCTION(void, preConnectionEvent)
 	};
 }
 
-CREATE_FUNCTION(void, destroyConnection)
+public function(void, destroyConnection)
 {
 	if (this->socket->id > 0)
 		close(this->socket->id);
 	free(this->socket);
 }
 
-CREATE_FUNCTION(void, bindEvent)
+public function(void, bindEvent)
 {
 	_N_(bind(
 		this->socket->id,
@@ -74,7 +74,7 @@ CREATE_FUNCTION(void, bindEvent)
 	), 6, CRITICAL);
 }
 
-CREATE_FUNCTION(void, listenEvent)
+public function(void, listenEvent)
 {
 	_N_(listen(
 		this->socket->id,
@@ -82,7 +82,7 @@ CREATE_FUNCTION(void, listenEvent)
 	), 6, CRITICAL);
 }
 
-CREATE_FUNCTION(void, setSocketOption)
+public function(void, setSocketOption)
 {
 	int length = 1;
 
@@ -95,7 +95,7 @@ CREATE_FUNCTION(void, setSocketOption)
 	), CRITICAL, 6);
 }
 
-CREATE_FUNCTION(void, acceptEvent)
+public function(void, acceptEvent)
 {
 	socklen_t length = sizeof(struct sockaddr_in);
 	this->socket->connected_fd = accept(
@@ -107,7 +107,7 @@ CREATE_FUNCTION(void, acceptEvent)
 
 }
 
-CREATE_FUNCTION(void, connectionEvent)
+public function(void, connectionEvent)
 {
 	_N_(connect(
 		this->socket->id,
@@ -124,7 +124,7 @@ CREATE_FUNCTION(void, connectionEvent)
 
 */
 
-CREATE_FUNCTION(int, passiveMode)
+public function(int, passiveMode)
 {
 	int sock = 0;
 	int port = 0;

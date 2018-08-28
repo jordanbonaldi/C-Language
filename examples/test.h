@@ -3,27 +3,45 @@
 
 # include <clang.h>
 
-static_main(int)
+# define Object tar
 
-function(private, void, test, String string)
+OBJECT_CREATOR
+(
+	tar,
+
+	String a;
+
+	String b;
+)
+
+private function(tar *, init)
+{
+	new(tar, toto, sizeof(tar));
+
+	toto->a = "toto";
+	toto->b = "titi";
+
+	return toto;
+}
+
+import main(int, init)
+
+public function(void, test, String string)
 {
 	printf("%s\n", string);
 }
 
-function(private, void, toto)
+private function(void, toto)
 {
 	printf("test1\n");
 }
 
-__launch__(int)
+default(int)
 {
-	int a = 0;
-	this->data = &a;
-
 	call(toto);
-	call(test, "toto");
+	call(test, use a);
 
-	printf("%d\n", ((int *)this->data)[0]);
+	call(test, use b);
 
 	return 0;
 }

@@ -31,7 +31,7 @@ OBJECT_CREATOR
 	char buff[MAX_SIZE];
 )
 
-CREATE_FUNCTION(void, buildBuffer)
+public function(void, buildBuffer)
 {
 	this->buffer = malloc(sizeof(Buffer));
 	__(this->buffer, 1, CRITICAL);
@@ -40,7 +40,7 @@ CREATE_FUNCTION(void, buildBuffer)
 	this->buffer->write = this->buffer->buff;
 }
 
-CREATE_FUNCTION(String, readDataBuffer)
+public function(String, readDataBuffer)
 {
 	int size = CHECK_SIZE(this->buffer);
 	String data = malloc(size + 1);
@@ -54,7 +54,7 @@ CREATE_FUNCTION(String, readDataBuffer)
 	return data;
 }
 
-CREATE_FUNCTION_PARAMS(void, addChar, char item)
+private function(void, addChar, char item)
 {
 	if (!this->buffer->write)
 		this->buffer->write = this->buffer->buff;
@@ -62,22 +62,22 @@ CREATE_FUNCTION_PARAMS(void, addChar, char item)
 	this->buffer->write = &WRITE_BUFFER(1);
 }
 
-CREATE_FUNCTION_PARAMS(void, writeDataBuffer, String data)
+public function(void, writeDataBuffer, String data)
 {
 	FOREACH_LENGTH(char, data, strlen(data), {
 		__SETUNUSED__(index);
-		CALL_FUNCTION_PARAMS(addChar, IT);
+		call(addChar, IT);
 	});
 }
 
-CREATE_FUNCTION_PARAMS(char, getData, int data)
+public function(char, getData, int data)
 {
 	if (data >= 0)
 		return READ_BUFFER(data);
 	return WRITE_BUFFER(data);
 }
 
-CREATE_FUNCTION(int, getSizeLeft)
+public function(int, getSizeLeft)
 {
 	if (this->buffer->write >= this->buffer->read)
 		return MAX_SIZE - (int)(this->buffer->write
@@ -85,13 +85,13 @@ CREATE_FUNCTION(int, getSizeLeft)
 	return (int)(this->buffer->read - this->buffer->write);
 }
 
-CREATE_FUNCTION(void, removeWrite)
+public function(void, removeWrite)
 {
 	if (this->buffer->write != this->buffer->read)
 		this->buffer->write = &WRITE_BUFFER(-1);
 }
 
-CREATE_FUNCTION(void, deleteBuffer)
+public function(void, deleteBuffer)
 {
 	if (this->buffer)
 		free(this->buffer);

@@ -38,14 +38,24 @@ OBJECT_CREATOR
 (
 	DefaultObj,
 
-	void *data;
+	void 		*data;
 
-	Socket *socket;
-	TimeManager *time;
-	Buffer *buffer;
-	Container *queue;
-	Tests *tests;
+	Socket 		*socket;
+	TimeManager 	*time;
+	Buffer 		*buffer;
+	Container 	*queue;
+	Tests 		*tests;
 )
+
+# define OBJ Object
+
+# define setObject(Obj, ...) (Obj) __VA_ARGS__
+
+# define setDefault(object) this->data = object;
+
+# define use ((OBJ*)this->data)->
+
+# define null NULL
 
 OBJECT_CREATOR
 (

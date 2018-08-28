@@ -26,15 +26,15 @@ OBJECT_CREATOR
 					.action = cb\
 				}
 
-# define CREATE_TEST(name) CREATE_FUNCTION(bool, name)
+# define CREATE_TEST(name) private function(bool, name)
 
-# define INIT_TEST CREATE_FUNCTION(void, init_test)
+# define INIT_TEST public function(void, init_test)
 
 # define __ACTIVATED__(n, f) {\
-				CALL_FUNCTION_PARAMS(addTest, setTests(n, GET_FUNCTION(f)));\
+				call(addTest, setTests(n, GET_FUNCTION(f)));\
 			}
 
-CREATE_FUNCTION(int, sizeTests)
+public function(int, sizeTests)
 {
 	int $i = 0;
 	FOREACH_LIST(Tests *, this->tests, {
@@ -44,12 +44,12 @@ CREATE_FUNCTION(int, sizeTests)
 	return $i;
 }
 
-CREATE_FUNCTION(void, launchTests)
+public function(void, launchTests)
 {
 	int $failed = 0;
 	int $succeed = 0;
 	int $test = 0;
-	int $size = CALL_FUNCTION(sizeTests);
+	int $size = call(sizeTests);
 
 	FOREACH_LIST
 	(
@@ -81,7 +81,7 @@ CREATE_FUNCTION(void, launchTests)
 		printf("\tFail : %.1f%%\n", (double)($failed * 100) / $size);
 }
 
-CREATE_FUNCTION_PARAMS(void, addTest, Tests test)
+public function(void, addTest, Tests test)
 {
 	Tests *__test;
 	Tests *tmp;
@@ -100,7 +100,7 @@ CREATE_FUNCTION_PARAMS(void, addTest, Tests test)
 	}
 }
 
-CREATE_FUNCTION(void, destroyTests)
+public function(void, destroyTests)
 {
 	Tests *tmp = this->tests;
 	Tests *tmp2;
