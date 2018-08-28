@@ -5,9 +5,14 @@
 
 static_main(int)
 
-public_function(void, toto)
+function(private, void, test, String string)
 {
-	printf("f\n");
+	printf("%s\n", string);
+}
+
+function(private, void, toto)
+{
+	printf("test1\n");
 }
 
 __launch__(int)
@@ -16,6 +21,7 @@ __launch__(int)
 	this->data = &a;
 
 	call(toto);
+	call(test, "toto");
 
 	printf("%d\n", ((int *)this->data)[0]);
 

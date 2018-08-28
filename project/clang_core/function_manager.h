@@ -10,6 +10,12 @@
 
 # define PARAM_NAMED this
 
+# define public
+
+# define private static
+
+# define VA_ARGS(...) , ##__VA_ARGS__
+
 # define __UNUSED__ (void)this;
 
 # define __SETUNUSED__(param) (void)param;
@@ -21,19 +27,8 @@
 # define CREATE_FUNCTION(type, name) type PRE_FUNC_NAME##name(\
 				__attribute__((unused))CREATE_ARGS)
 
-# define public_function(type, name) type PRE_FUNC_NAME##name(\
-				__attribute__((unused))CREATE_ARGS)
-
-# define private_function(type, name) static type PRE_FUNC_NAME##name(\
-				__attribute__((unused))CREATE_ARGS)
-
-# define private_function_params(type, name, params) \
-	static type PRE_FUNC_NAME##name(__attribute__((unused))CREATE_ARGS,\
-			__attribute__((unused))params)
-
-# define public_function_params(type, name, params) \
-	type PRE_FUNC_NAME##name(__attribute__((unused))CREATE_ARGS,\
-			__attribute__((unused))params)
+# define function(access, type, name, ...) access type PRE_FUNC_NAME##name(\
+				__attribute__((unused))CREATE_ARGS VA_ARGS(__VA_ARGS__))
 
 # define CREATE_FUNCTION_PARAMS(type, name, params) \
 	type PRE_FUNC_NAME##name(__attribute__((unused))CREATE_ARGS,\
@@ -51,7 +46,7 @@
 # define CREATE_FUNCTION_VARIADIC(type, name, params, ...) \
 	type PRE_FUNC_NAME##name(CREATE_ARGS, params, __VA_ARGS__)
 
-# define call(name) PRE_FUNC_NAME##name(PARAM_NAMED)
+# define call(name, ...) PRE_FUNC_NAME##name(PARAM_NAMED VA_ARGS(__VA_ARGS__))
 
 # define CALL_FUNCTION(name) PRE_FUNC_NAME##name(PARAM_NAMED)
 
