@@ -7,20 +7,30 @@
 
 OBJECT_CREATOR
 (
+	michel,
+
+	int ui;
+)
+
+OBJECT_CREATOR
+(
 	tar,
 
 	String a;
-
+	michel mich;
 	String b;
 )
 
 private tar * function(init)
 {
 	new(tar)
-    alloc(toto, sizeof(tar));
+	alloc(toto, sizeof(tar));
 
 	toto->a = "toto";
 	toto->b = "titi";
+	toto->mich = setObject(michel, {
+		.ui = 90
+	});
 
 	return toto;
 }
@@ -35,35 +45,38 @@ private void function(toto)
 	printf("test1\n");
 }
 
-CREATE_TEST(toto1)
+$new test(toto1)
 {
 	return false;
 }
 
-CREATE_TEST(toto2)
+$new test(toto2)
 {
 	return true;
 }
 
-INIT_TEST
+$new initialisator
 {
-	__ACTIVATED__("t1", toto1)
-	__ACTIVATED__("t2", toto2)
+	$new define("t1", toto1)
+	$new define("t2", toto2)
 }
 
 import main(int, { call(init) })
 
 default(int)
 {
-    new(String)
-    alloc(name, 19)
+	new(String)
+	alloc(name, 19)
 
-		name[0] = "tot";
+	name[0] = "tot";
 
-		call(test, *name);
+	call(test, *name);
 
-		call(test, use a);
-		return 0;
+	call(test, use a);
+
+	printf("%d\n", use mich.ui);
+
+	return 0;
 }
 
 # endif

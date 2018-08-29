@@ -26,11 +26,11 @@ OBJECT_CREATOR
 					.action = cb\
 				}
 
-# define CREATE_TEST(name) public bool function(name)
+# define test(name) public bool function(name)
 
-# define INIT_TEST public void function(init_test)
+# define initialisator public void function(init_test)
 
-# define __ACTIVATED__(n, f) {\
+# define define(n, f) {\
 				call(addTest, setTests(n, get(f)));\
 			}
 
@@ -41,8 +41,6 @@ private int function(sizeTests)
 	foreach(Tests *, this->tests, {
 		$i++;
 	});
-
-	printf("%d\n", $i);
 
 	return $i;
 }
