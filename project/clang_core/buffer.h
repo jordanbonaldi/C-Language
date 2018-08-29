@@ -10,17 +10,17 @@
 
 # include "clang.h"
 
-# define MAX_SIZE 4096
+# define __BUFFER_MAX_SIZE__ 4096
 
 # define CHECK_SIZE(buffer) buffer->write >= buffer->read ? \
 			(int)(buffer->write - buffer->read) : \
-			(MAX_SIZE - (int)(buffer->read - buffer->write))
+			(__BUFFER_MAX_SIZE__ - (int)(buffer->read - buffer->write))
 
 # define WRITE_BUFFER(x) this->buffer->buff[(((size_t) this->buffer->write + x)\
-				- (size_t)this->buffer->buff) % MAX_SIZE]
+				- (size_t)this->buffer->buff) % __BUFFER_MAX_SIZE__]
 
 # define READ_BUFFER(x) this->buffer->buff[(((size_t) this->buffer->read + x)\
-				- (size_t)this->buffer->buff) % MAX_SIZE]
+				- (size_t)this->buffer->buff) % __BUFFER_MAX_SIZE__]
 
 OBJECT_CREATOR
 (
@@ -28,33 +28,33 @@ OBJECT_CREATOR
 
 	String read;
 	String write;
-	char buff[MAX_SIZE];
+	char buff[__BUFFER_MAX_SIZE__];
 )
 
-public function(void, buildBuffer)
+public void function(buildBuffer)
 {
-	this->buffer = malloc(sizeof(Buffer));
-	__(this->buffer, 1, CRITICAL);
-	RESET(this->buffer->buff, MAX_SIZE);
+	alloc(this->buffer, sizeof(Buffer))
+	$reset(this->buffer->buff, __BUFFER_MAX_SIZE__);
 	this->buffer->read = this->buffer->buff;
 	this->buffer->write = this->buffer->buff;
 }
 
-public function(String, readDataBuffer)
+public String function(readDataBuffer)
 {
 	int size = CHECK_SIZE(this->buffer);
-	String data = malloc(size + 1);
 
-	__(data, 1, CRITICAL);
-	RESET(data, size + 1);
-	FOREACH_IT(size, {
+	new(char)
+	alloc(data, size + 1)
+
+	$reset(data, size + 1);
+	foreach(size, {
 		data[index] = *this->buffer->read;
 		this->buffer->read = &READ_BUFFER(1);
 	});
 	return data;
 }
 
-private function(void, addChar, char item)
+private void function(addChar, char item)
 {
 	if (!this->buffer->write)
 		this->buffer->write = this->buffer->buff;
@@ -62,36 +62,35 @@ private function(void, addChar, char item)
 	this->buffer->write = &WRITE_BUFFER(1);
 }
 
-public function(void, writeDataBuffer, String data)
+public void function(writeDataBuffer, String data)
 {
-	FOREACH_LENGTH(char, data, strlen(data), {
-		__SETUNUSED__(index);
+	foreach(char, data, strlen(data), {
 		call(addChar, IT);
 	});
 }
 
-public function(char, getData, int data)
+public char function(getData, int data)
 {
 	if (data >= 0)
 		return READ_BUFFER(data);
 	return WRITE_BUFFER(data);
 }
 
-public function(int, getSizeLeft)
+public int function(getSizeLeft)
 {
 	if (this->buffer->write >= this->buffer->read)
-		return MAX_SIZE - (int)(this->buffer->write
+		return __BUFFER_MAX_SIZE__ - (int)(this->buffer->write
 			- this->buffer->read);
 	return (int)(this->buffer->read - this->buffer->write);
 }
 
-public function(void, removeWrite)
+public void function(removeWrite)
 {
 	if (this->buffer->write != this->buffer->read)
 		this->buffer->write = &WRITE_BUFFER(-1);
 }
 
-public function(void, deleteBuffer)
+public void function(deleteBuffer)
 {
 	if (this->buffer)
 		free(this->buffer);

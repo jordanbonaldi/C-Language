@@ -38,7 +38,7 @@
 
 # include "clang_core/anticipator.h"
 
-public function(void, __EXIT)
+public void function(__EXIT)
 {
 	exit(EXIT_SUCCESS);
 }

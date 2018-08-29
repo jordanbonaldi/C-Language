@@ -20,13 +20,13 @@
 
 # define __UNUSED__ (void)this;
 
-# define __SETUNUSED__(param) (void)param;
+# define notused (void)
 
 # define PRE_FUNC_NAME MAIN_PREFIX
 
 # define CREATE_ARGS MAIN_STRUCT *PARAM_NAMED
 
-# define function(type, name, ...) type PRE_FUNC_NAME##name(\
+# define function(name, ...) PRE_FUNC_NAME##name(\
 				__attribute__((unused))CREATE_ARGS VA_ARGS(__VA_ARGS__))
 
 # define default(type) type launcher(\
@@ -48,10 +48,20 @@
 # define main(type, ...) type main(__attribute__((unused)) const int argc,\
 				__attribute__((unused)) char **argv\
 			) {\
-					new(MAIN_STRUCT, this, sizeof(MAIN_STRUCT))\
+					new(MAIN_STRUCT)\
+					alloc(this, sizeof(MAIN_STRUCT))\
+					type t;\
+					if (argc == 2 && $equals(argv[1], "--test")) {\
+						this->tests = null;\
+						call(init_test);\
+						call(launchTests);\
+						call(destroyTests);\
+						free(this);\
+						return 0;\
+					}\
 					Object *obj = __VA_ARGS__;\
 					setDefault(obj)\
-					type t = launcher(this, argc, argc);\
+					t = launcher(this, argc, argc);\
 					free(obj);\
 					free(this);\
 					return t;\

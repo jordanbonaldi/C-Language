@@ -40,7 +40,7 @@ OBJECT_CREATOR
 # define _NQ_(a, b, c) \
 		a <= 0 ? call(error, setError(b, c)) : 0
 
-public function(String, getErrorAsString, Error error)
+public String function(getErrorAsString, Error error)
 {
 	__UNUSED__;
 	switch (error.status)
@@ -55,7 +55,7 @@ public function(String, getErrorAsString, Error error)
 	return "NONE";
 }
 
-public function(void, error, Error error)
+public void function(error, Error error)
 {
 	__UNUSED__;
 	printf("[%s] Unexpected error happened : %d\n",

@@ -54,64 +54,67 @@ OBJECT_CREATOR
 
 # define load call(createTime)
 
-public function(void, refreshTime, Times *_time)
+public void function(refreshTime, Times *_time)
 {
 	_(clock_gettime(CLOCK_BOOTTIME, _time->time))
 }
 
-public function(Times *, createTime)
+public Times * function(createTime)
 {
-	__MALLOC_CR__(Times, _time, sizeof(Times))
+	new(Times)
+	alloc(_time, sizeof(Times))
 
-	__MALLOC__(_time->time, sizeof(struct timespec))
+	alloc(_time->time, sizeof(struct timespec))
 
 	reload(_time)
 
-	__return(_time)
+	$return(_time)
 }
 
-public function(Times *, cloneTime, Times *clone)
+public Times * function(cloneTime, Times *clone)
 {
-	__MALLOC_CR__(Times, _time, sizeof(Times))
+	new(Times)
+	alloc(_time, sizeof(Times))
 
-	__MALLOC__(_time->time, sizeof(struct timespec))
+	alloc(_time->time, sizeof(struct timespec))
 
 	_(_time->time->tv_sec = clone->time->tv_sec)
 	_(_time->time->tv_nsec = clone->time->tv_nsec)
 
-	__return(_time)
+	$return(_time)
 }
 
-public function(void, addTime, Unknown unknown)
+public void function(addTime, Unknown unknown)
 {
-	_get(Times, _time, alpha)
-	_get(Times, __time, beta)
+	$get(Times, _time, alpha)
+	$get(Times, __time, beta)
 
 	if (_time->refresh)
 		reload(_time)
 
-	_A_(_time->time->tv_sec, __time->time->tv_sec)
-	_A_(_time->time->tv_nsec, __time->time->tv_nsec)
+	$a(_time->time->tv_sec, __time->time->tv_sec)
+	$a(_time->time->tv_nsec, __time->time->tv_nsec)
 }
 
-public function(void, delTime, Unknown unknown)
+public void function(delTime, Unknown unknown)
 {
-	_get(Times, _time, alpha)
-	_get(Times, __time, beta)
+	$get(Times, _time, alpha)
+	$get(Times, __time, beta)
 
 	if (_time->refresh)
 		reload(_time)
 
-	_D_(_time->time->tv_sec, __time->time->tv_sec)
-	_D_(_time->time->tv_nsec, __time->time->tv_nsec)
+	$d(_time->time->tv_sec, __time->time->tv_sec)
+	$d(_time->time->tv_nsec, __time->time->tv_nsec)
 
 }
 
-public function(Times *, TimeConverter, int sec)
+public Times * function(TimeConverter, int sec)
 {
-	__MALLOC_CR__(Times, _time, sizeof(Times))
+	new(Times)
+	alloc(_time, sizeof(Times))
 
-	__MALLOC__(_time->time, sizeof(struct timespec))
+	alloc(_time->time, sizeof(struct timespec))
 
 	_(double a = (sec / 1000000))
 
@@ -121,37 +124,38 @@ public function(Times *, TimeConverter, int sec)
 
 	_(_time->time->tv_nsec = (x % 1000000) * 100)
 
-	__return(_time)
+	$return(_time)
 }
 
-public function(TimeManager *, setTimeManager)
+public TimeManager * function(setTimeManager)
 {
-	__MALLOC_CR__(TimeManager, tm, sizeof(TimeManager))
+	new(TimeManager)
+	alloc(tm, sizeof(TimeManager))
 
 	_(tm->timeout = convert(1))
 	_(tm->now_io = load)
 	_(tm->now_pl = load)
-	__return(tm)
+	$return(tm)
 }
 
-public function(bool, isActionPossible, Unknown unknown)
+public bool function(isActionPossible, Unknown unknown)
 {
-	_get(Times, _time, alpha)
-	_get(Times, __time, beta)
+	$get(Times, _time, alpha)
+	$get(Times, __time, beta)
 
-	__return(_time->time->tv_sec > __time->time->tv_sec ? true :
+	$return(_time->time->tv_sec > __time->time->tv_sec ? true :
 		_time->time->tv_sec == __time->time->tv_sec &&
 		_time->time->tv_nsec > __time->time->tv_nsec ?
 		true : false)
 }
 
-public function(void, destroyTime, Times *_time)
+public void function(destroyTime, Times *_time)
 {
 	_(free(_time->time))
 	_(free(_time))
 }
 
-public function(void, destroyTimeManager)
+public void function(destroyTimeManager)
 {
 	_(call(destroyTime, this->time->timeout))
 	_(call(destroyTime, _now_io))

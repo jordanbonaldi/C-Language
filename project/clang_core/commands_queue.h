@@ -33,7 +33,7 @@ OBJECT_CREATOR
 # define sizeQueue(size) call(QueueSize, size)
 
 
-public function(void, removeFirst, Container *container)
+public void function(removeFirst, Container *container)
 {
 	_(Queue *actual = container->contained)
 	_(Queue *tmp = ((Queue *)container->contained)->next)
@@ -45,38 +45,36 @@ public function(void, removeFirst, Container *container)
 }
 
 
-public function(int, QueueSize, Queue *queue)
+public int function(QueueSize, Queue *queue)
 {
 	_(int $i = 0)
 
-	FOREACH_LIST
+	foreach
 	(
 		Queue *,
 		queue,
 
 		{
-			__SETUNUSED__(index)
-			__SETUNUSED__(IT)
 			_($i++)
 		}
 	)
 
-	__return($i)
+	$return($i)
 }
 
 
-public function(void, addQueue, Unknown unknown)
+public void function(addQueue, Unknown unknown)
 {
-	_get(Container, _queue, alpha);
-	_get(char, __name, beta);
+	$get(Container, _queue, alpha)
+	$get(char, __name, beta)
 
 	if (sizeQueue(_queue->contained) >= 10)
 		return;
 
-	Queue *__cmd;
-	Queue *tmp;
+	new (Queue)
+	alloc(__cmd, sizeof(Queue))
 
-	__MALLOC__(__cmd, sizeof(Queue))
+	Queue *tmp;
 
 	__cmd->name = __name;
 	__cmd->next = NULL;
@@ -91,7 +89,7 @@ public function(void, addQueue, Unknown unknown)
 }
 
 
-public function(void, destroyQueue, Container *container)
+public void function(destroyQueue, Container *container)
 {
 	Queue *queue = container->contained;
 

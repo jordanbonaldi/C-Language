@@ -76,8 +76,4 @@ OBJECT_CREATOR
 
 # define String char *
 
-# define _sendToUser(x, s) dprintf(x, s)
-
-# define __sendToUser(user, s, ...) dprintf(user->index, s, __VA_ARGS__)
-
 #endif

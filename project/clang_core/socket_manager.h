@@ -25,30 +25,29 @@ OBJECT_CREATOR
 	bool connection;
 )
 
-public function(void, setIp, String ip)
+public void function(setIp, String ip)
 {
 	this->socket->ip = ip;
 }
 
-public function(void, setPort, int port)
+public void function(setPort, int port)
 {
 	this->socket->port = port;
 }
 
-public function(void, setAddr, in_addr_t addr)
+public void function(setAddr, in_addr_t addr)
 {
 	this->socket->addr.sin_addr.s_addr = addr;
 }
 
-public function(void, initPreConnectionEvent)
+public void function(initPreConnectionEvent)
 {
-	this->socket = malloc(sizeof(Socket));
-	__(this->socket, 1, CRITICAL);
+	alloc(this->socket, sizeof(Socket))
 	this->socket->id = -1;
 	this->socket->port = -1;
 }
 
-public function(void, preConnectionEvent)
+public void function(preConnectionEvent)
 {
 	this->socket->id = socket(AF_INET, SOCK_STREAM, 0);
 	_N_(this->socket->id, 6, CRITICAL);
@@ -58,14 +57,14 @@ public function(void, preConnectionEvent)
 	};
 }
 
-public function(void, destroyConnection)
+public void function(destroyConnection)
 {
 	if (this->socket->id > 0)
 		close(this->socket->id);
 	free(this->socket);
 }
 
-public function(void, bindEvent)
+public void function(bindEvent)
 {
 	_N_(bind(
 		this->socket->id,
@@ -74,7 +73,7 @@ public function(void, bindEvent)
 	), 6, CRITICAL);
 }
 
-public function(void, listenEvent)
+public void function(listenEvent)
 {
 	_N_(listen(
 		this->socket->id,
@@ -82,7 +81,7 @@ public function(void, listenEvent)
 	), 6, CRITICAL);
 }
 
-public function(void, setSocketOption)
+public void function(setSocketOption)
 {
 	int length = 1;
 
@@ -95,7 +94,7 @@ public function(void, setSocketOption)
 	), CRITICAL, 6);
 }
 
-public function(void, acceptEvent)
+public void function(acceptEvent)
 {
 	socklen_t length = sizeof(struct sockaddr_in);
 	this->socket->connected_fd = accept(
@@ -107,7 +106,7 @@ public function(void, acceptEvent)
 
 }
 
-public function(void, connectionEvent)
+public void function(connectionEvent)
 {
 	_N_(connect(
 		this->socket->id,
@@ -124,7 +123,7 @@ public function(void, connectionEvent)
 
 */
 
-public function(int, passiveMode)
+public int function(passiveMode)
 {
 	int sock = 0;
 	int port = 0;

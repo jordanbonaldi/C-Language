@@ -14,9 +14,10 @@ OBJECT_CREATOR
 	String b;
 )
 
-private function(tar *, init)
+private tar * function(init)
 {
-	new(tar, toto, sizeof(tar));
+	new(tar)
+    alloc(toto, sizeof(tar));
 
 	toto->a = "toto";
 	toto->b = "titi";
@@ -24,23 +25,45 @@ private function(tar *, init)
 	return toto;
 }
 
-import main(int, NULL)
-
-public function(void, test, String string)
+public void function(test, String string)
 {
 	printf("%s\n", string);
 }
 
-private function(void, toto)
+private void function(toto)
 {
 	printf("test1\n");
 }
 
+CREATE_TEST(toto1)
+{
+	return false;
+}
+
+CREATE_TEST(toto2)
+{
+	return true;
+}
+
+INIT_TEST
+{
+	__ACTIVATED__("t1", toto1)
+	__ACTIVATED__("t2", toto2)
+}
+
+import main(int, { call(init) })
+
 default(int)
 {
-	printf("tt");
+    new(String)
+    alloc(name, 19)
 
-	return 0;
+		name[0] = "tot";
+
+		call(test, *name);
+
+		call(test, use a);
+		return 0;
 }
 
 # endif

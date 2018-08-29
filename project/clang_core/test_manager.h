@@ -26,32 +26,35 @@ OBJECT_CREATOR
 					.action = cb\
 				}
 
-# define CREATE_TEST(name) private function(bool, name)
+# define CREATE_TEST(name) public bool function(name)
 
-# define INIT_TEST public function(void, init_test)
+# define INIT_TEST public void function(init_test)
 
 # define __ACTIVATED__(n, f) {\
-				call(addTest, setTests(n, GET_FUNCTION(f)));\
+				call(addTest, setTests(n, get(f)));\
 			}
 
-public function(int, sizeTests)
+private int function(sizeTests)
 {
 	int $i = 0;
-	FOREACH_LIST(Tests *, this->tests, {
-		__SETUNUSED__(IT);
+
+	foreach(Tests *, this->tests, {
 		$i++;
-	})
+	});
+
+	printf("%d\n", $i);
+
 	return $i;
 }
 
-public function(void, launchTests)
+public void function(launchTests)
 {
 	int $failed = 0;
 	int $succeed = 0;
 	int $test = 0;
 	int $size = call(sizeTests);
 
-	FOREACH_LIST
+	foreach
 	(
 		Tests *,
 		this->tests,
@@ -81,11 +84,12 @@ public function(void, launchTests)
 		printf("\tFail : %.1f%%\n", (double)($failed * 100) / $size);
 }
 
-public function(void, addTest, Tests test)
+public void function(addTest, Tests test)
 {
-	Tests *__test;
+	new(Tests)
+	alloc(__test, sizeof(Tests))
+
 	Tests *tmp;
-	__MALLOC__(__test, sizeof(Tests));
 
 	__test->name = test.name;
 	__test->action = test.action;
@@ -100,7 +104,7 @@ public function(void, addTest, Tests test)
 	}
 }
 
-public function(void, destroyTests)
+public void function(destroyTests)
 {
 	Tests *tmp = this->tests;
 	Tests *tmp2;

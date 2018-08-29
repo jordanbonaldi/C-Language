@@ -10,44 +10,35 @@
 
 # include "clang.h"
 
-# define ASSIGN(a, b) a ?: a = b;
+# define $s(a, b) a ?: a = b;
 
 # define setNULL(setter) this->setter = NULL
 
-# define RESET(a, size) memset(a, 0, size)
+# define $reset(a, size) memset(a, 0, size)
 
-# define __ATTR__(attr, name) attr name
+# define $attr(attr, name) attr name
 
-# define _A_(a, b) a += b;
+# define $a(a, b) a += b;
 
-# define _D_(a, b) a -= b;
+# define $d(a, b) a -= b;
 
-# define __return(value) return (value);
+# define $equals(a, b) !strcmp(a, b)
+
+# define $return(value) return (value);
 
 # define _(a) a;
 
 # define _time_attr unsigned long long int
 
-# define _get(type, name, index) type *name = (type *)unknown.index;
+# define $get(type, name, index) type *name = (type *)unknown.index;
 
-# define __MALLOC_CR__(attr, name, size) attr * name = malloc(size);\
-				{\
-					_(__(name, CRITICAL, 1));\
-				}
-
-# define __MALLOC__(attr, size) attr = malloc(size);\
-				{\
-					_(__(attr, CRITICAL, 1));\
-				}
-
-# define new(attr, name, size) attr * name = malloc(size);\
-				{\
-					_(__(name, CRITICAL, 1));\
-				}
+# define new(name) name *
 
 # define alloc(attr, size) attr = malloc(size);\
 				{\
 					_(__(attr, CRITICAL, 1));\
 				}
+
+#define GET_MACRO(_1,_2,_3,_4,NAME,...) NAME
 
 # endif

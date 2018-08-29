@@ -17,38 +17,35 @@
 
 # define ARRAY_LEN(arr) (sizeof(arr) / sizeof(*arr))
 
-# define FOREACH_LENGTH_FUNCTION(type, obj, length, func) {\
-		void (*__action)(type GLOBAL_ITERATOR_NAME, \
+# define __ITERATE__(type, obj, length, func) {\
+		void (*__action)(__attribute__((unused))type GLOBAL_ITERATOR_NAME, \
 				__attribute__((unused)) int index) = func;\
 		for (int index = 0; index < (int)length; index++)\
 			__action(obj[index], index);\
 	}
 
-# define FOREACH_FUNCTION(type, obj, func)\
-		FOREACH_LENGTH_FUNCTION(type, obj, \
-			ARRAY_LEN(obj), func)
+# define length_iterate(type, obj, length, func)\
+		__ITERATE__(type, obj, length, \
+		EXEC_FUNC(void, (__attribute__((unused))type GLOBAL_ITERATOR_NAME,\
+		 __attribute__((unused))int index) func))
 
-# define FOREACH_LENGTH(type, obj, length, func)\
-		FOREACH_LENGTH_FUNCTION(type, obj, length, \
-		EXEC_FUNC(void, (type GLOBAL_ITERATOR_NAME, int index) func))
-
-# define FOREACH(a, b, func)\
-		FOREACH_LENGTH(a, b, ARRAY_LEN(b), func)
-
-# define FOREACH_IT(max, func) {\
+# define number_iterate(max, func) {\
 		void (*__action)(int index) = \
-		EXEC_FUNC(void, (int index) func);\
+		EXEC_FUNC(void, (__attribute__((unused))int index) func);\
 		for (int index = 0; index < max; index++) \
 			__action(index);\
 	}
 
-# define FOREACH_LIST(type, obj, func) {\
+# define list_iterate(type, obj, func) {\
 	type tmp = obj; \
 	void (*__action)(type GLOBAL_ITERATOR_NAME) = \
-	EXEC_FUNC(void, (type GLOBAL_ITERATOR_NAME) func);\
+	EXEC_FUNC(void, (__attribute__((unused))type GLOBAL_ITERATOR_NAME) func);\
 	while (tmp) {\
 		__action(tmp);\
 		tmp = tmp->next;\
 	}\
 }
+
+#define foreach(...) GET_MACRO(__VA_ARGS__, length_iterate, list_iterate, number_iterate)(__VA_ARGS__)
+
 #endif
