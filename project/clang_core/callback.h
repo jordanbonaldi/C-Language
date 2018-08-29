@@ -10,7 +10,7 @@
 
 # include "clang.h"
 
-$new Class
+$new Object
 (
 	CallBack,
 

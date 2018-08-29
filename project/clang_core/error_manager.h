@@ -18,7 +18,7 @@ enum s_status
 	CRITICAL
 };
 
-$new Class
+$new Object
 (
 	Error,
 

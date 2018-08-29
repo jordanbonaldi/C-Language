@@ -1,18 +1,15 @@
-# ifndef toto_HH
-	# define toto_HH
-
 # include <clang.h>
 
-# define Object tar
+# define $Object tar
 
-$new Class
+$new Object
 (
 	michel,
 
 	int ui;
 )
 
-$new Class
+$new Object
 (
 	tar,
 
@@ -78,5 +75,3 @@ default(int)
 
 	return 0;
 }
-
-# endif

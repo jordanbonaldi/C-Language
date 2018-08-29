@@ -10,7 +10,7 @@
 
 # include "clang.h"
 
-$new Class
+$new Object
 (
 	Times,
 
@@ -18,7 +18,7 @@ $new Class
 	bool refresh;
 )
 
-$new Class
+$new Object
 (
 	TimeManager,
 

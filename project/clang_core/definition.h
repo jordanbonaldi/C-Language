@@ -8,7 +8,7 @@
 # ifndef DEFINITION_HH
 	# define DEFINITION_HH
 
-# define Class(x, ...) typedef struct s_##x { \
+# define Object(x, ...) typedef struct s_##x { \
 				__VA_ARGS__; \
 			} x;
 
@@ -36,7 +36,7 @@
 
 # define $new
 
-$new Class
+$new Object
 (
 	DefaultObj,
 
@@ -49,7 +49,7 @@ $new Class
 	Tests 		*tests;
 )
 
-# define OBJ Object
+# define OBJ $Object
 
 # define setObject(Obj, ...) (Obj) __VA_ARGS__
 
@@ -59,7 +59,7 @@ $new Class
 
 # define null NULL
 
-$new Class
+$new Object
 (
 	Unknown,
 

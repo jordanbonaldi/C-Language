@@ -59,7 +59,7 @@
 						free(this);\
 						return 0;\
 					}\
-					Object *obj = __VA_ARGS__;\
+					$Object *obj = __VA_ARGS__;\
 					setDefault(obj)\
 					t = launcher(this, argc, argc);\
 					free(obj);\
