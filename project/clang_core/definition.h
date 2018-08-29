@@ -8,7 +8,7 @@
 # ifndef DEFINITION_HH
 	# define DEFINITION_HH
 
-# define OBJECT_CREATOR(x, ...) typedef struct s_##x { \
+# define Class(x, ...) typedef struct s_##x { \
 				__VA_ARGS__; \
 			} x;
 
@@ -34,7 +34,9 @@
 	End pre processing definition
 */
 
-OBJECT_CREATOR
+# define $new
+
+$new Class
 (
 	DefaultObj,
 
@@ -57,7 +59,7 @@ OBJECT_CREATOR
 
 # define null NULL
 
-OBJECT_CREATOR
+$new Class
 (
 	Unknown,
 

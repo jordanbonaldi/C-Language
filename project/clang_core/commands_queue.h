@@ -10,14 +10,14 @@
 
 # include "clang.h"
 
-OBJECT_CREATOR
+$new Class
 (
 	Container,
 
 	void *contained;
 )
 
-OBJECT_CREATOR
+$new Class
 (
 	Queue,
 

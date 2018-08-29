@@ -5,14 +5,14 @@
 
 # define Object tar
 
-OBJECT_CREATOR
+$new Class
 (
 	michel,
 
 	int ui;
 )
 
-OBJECT_CREATOR
+$new Class
 (
 	tar,
 

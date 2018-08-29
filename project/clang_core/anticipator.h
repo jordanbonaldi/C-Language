@@ -32,8 +32,6 @@
 
 # define $get(type, name, index) type *name = (type *)unknown.index;
 
-# define $new
-
 # define new(name) name *
 
 # define alloc(attr, size) attr = malloc(size);\

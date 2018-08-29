@@ -18,7 +18,7 @@ enum s_status
 	CRITICAL
 };
 
-OBJECT_CREATOR
+$new Class
 (
 	Error,
 

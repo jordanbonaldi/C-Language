@@ -10,7 +10,7 @@
 
 # include "clang.h"
 
-OBJECT_CREATOR
+$new Class
 (
 	CallBack,
 
