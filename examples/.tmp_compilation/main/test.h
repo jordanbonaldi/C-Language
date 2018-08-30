@@ -1,7 +1,7 @@
 #ifndef sync_main
 #define sync_main
 
-#include <clangh.h>
+#include <clang.h>
 
 # define $Object tar
 

@@ -33,11 +33,11 @@ change_header()
     if [ "$line" = "0" ]
     then
         mv $compilation/$package/${arr[$index]} $compilation/$package/$new.h
-        sed -i "s/$replace/#ifndef $define\n#define $define\n\n#include <clangh.h>/g" $compilation/$package/$new.h
+        sed -i "s/$replace/#ifndef $define\n#define $define\n\n#include <clang.h>/g" $compilation/$package/$new.h
         echo "#endif" >> $compilation/$package/$new.h
     else
         mv $compilation/${arr[$index]} $compilation/$new.h
-        sed -i "s/$replace/#ifndef $define\n#define $define\n\n#include <clangh.h>/g" $compilation/$new.h
+        sed -i "s/$replace/#ifndef $define\n#define $define\n\n#include <clang.h>/g" $compilation/$new.h
         echo "#endif" >> $compilation/$new.h
     fi
 }
@@ -62,26 +62,24 @@ do
     change_header
 
 done
+#
+# echo "Compiling files:"
+# for index in ${!arr[*]}
+# do
+#
+#
+# done
 
-echo "Compiling files:"
-for index in ${!arr[*]}
-do
-    package=$(grep "package" ${arr[$index]} | cut -d' ' -f3)
+touch $compilation/main.c
 
-    printf "Refactoring file %s in package %s\n\n" ${arr[$index]} $package
+main=$(basename `grep -Rl "default(" --include=*.h`)
 
-    printf "\tSynchronisation of package %s\n\n" $package
+echo "#include \"$main\"" > $compilation/main.c
 
-    mkdir $compilation/$package
+toto="tot"
 
-    cp ${arr[$index]} $compilation/$package/.
+toto=toto " tt"
 
-    new=$(echo ${arr[$index]} | cut -d'.' -f1)
-
-    get_lines ${arr[$index]}
-
-    change_header
-
-done
+echo $toto
 
 #rm -rf $compilation
