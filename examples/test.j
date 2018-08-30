@@ -1,72 +1,32 @@
 # package main
 
-# define $Object tar
+import file test_handler
+
+# define $Object test
 
 $new Object
 (
-	michel,
+	test,
 
-	int ui;
+	String test1;
+	String test2;
 )
 
-$new Object
-(
-	tar,
-
-	String a;
-	michel mich;
-	String b;
-)
-
-private tar * function(init)
+private test * function(init)
 {
-	new(tar)
-	alloc(toto, sizeof(tar));
+	new(test)
+	alloc(_test, sizeof(test))
 
-	toto->a = "toto";
-	toto->b = "titi";
-	toto->mich = setObject(michel, {
-		.ui = 90
-	});
+	_test->test1 = "hello";
+	_test->test2 = "world";
 
-	return toto;
+	return _test;
 }
 
-private void function(toto)
-{
-	printf("test1\n");
-}
-
-$new test(toto1)
-{
-	return false;
-}
-
-$new test(toto2)
-{
-	return true;
-}
-
-$new initialisator
-{
-	$new define("t1", toto1)
-	$new define("t2", toto2)
-}
-
-import main(int, { call(init) })
+import main(int, { call(init)})
 
 default(int)
 {
-	new(String)
-	alloc(name, 19)
-
-	name[0] = "tot";
-
-	call(test, *name);
-
-	call(test, use a);
-
-	printf("%d\n", use mich.ui);
-
+	printf("%s %s\n", use test1, use test2);
 	return 0;
 }

@@ -31,6 +31,10 @@ PATH_CORE = $(PATH_PROJECT)$(FILE)/
 
 MAKE_FILE = $(PATH_PROJECT).install/Makefile
 
+COMPILER = $(PATH_PROJECT).install/clang_compile
+
+COMPILER_BIN = /bin/
+
 NAME = libclang.so
 
 SRCS = $(PATH_PROJECT)main.c
@@ -50,6 +54,8 @@ remove_if_exist:
 transfer: remove_if_exist
 	cp $(NAME) $(PATH_LIB).
 	cp $(MAKE_FILE) $(PATH_INCLUDE_CORE)
+	cp $(COMPILER) $(COMPILER_BIN)
+	chmod 665 $(COMPILER_BIN)clang_compile
 	cp -R $(PATH_CORE)* $(PATH_INCLUDE_CORE).
 	cp $(PATH_PROJECT)$(MAIN_HEADER) $(PATH_INCLUDE).
 

@@ -1,0 +1,131 @@
+#!/usr/bin/env bash
+
+arr=($(grep -R "package" --include=*.j | cut -d':' -f1))
+
+if [ $# -eq 0 ]
+then
+	name="a.out"
+else
+	name=$1
+fi
+
+rm -rfv $name
+
+compilation=".tmp_compilation"
+
+make_path=/usr/include/clang_core/Makefile
+
+mkdir $compilation
+
+min=0
+max=$(( ${#arr[@]} -1 ))
+
+while [[ min -lt max ]]
+do
+    x="${arr[$min]}"
+    arr[$min]="${arr[$max]}"
+    arr[$max]="$x"
+
+    (( min++, max-- ))
+done
+
+count_lines()
+{
+    empty=$(echo $1 | wc | cut -d' ' -f14)
+
+    if [ "$empty" = "0" ]
+    then
+        line=0
+    else
+        line=$(echo $1 | wc -l)
+    fi
+}
+
+get_lines()
+{
+    cmd=$(echo $1 | grep -o "/")
+    count_lines $cmd
+}
+
+change_header()
+{
+    replace="# package $package"
+
+    define="sync"_$index
+
+    mv $to_path/${arr[$index]} $path
+
+    sed -i "1s/.*/#ifndef $define\n#define $define\n\n#include <clang.h>/" $path
+
+    echo "#endif" >> $path
+
+}
+
+load_import()
+{
+	imports=($(grep "import file" $path | cut -d' ' -f3))
+
+	for idx in ${!imports[*]}
+	do
+		replace="import file "${imports[$idx]}
+		sed -i "s/$replace/# include "\"${imports[$idx]}.h\""/g" $path
+	done
+}
+
+cp $make_path $compilation/.
+
+echo "Looking for files:"
+for index in ${!arr[*]}
+do
+    package=$(grep "package" ${arr[$index]} | cut -d' ' -f3)
+
+    printf "Refactoring file %s in package %s\n\n" ${arr[$index]} $package
+
+    printf "\tSynchronisation of package %s\n\n" $package
+
+    mkdir -p $compilation/$package
+
+    cp ${arr[$index]} $compilation/$package/.
+
+    new=$(echo ${arr[$index]} | cut -d'.' -f1)
+
+    get_lines ${arr[$index]}
+
+    if [ "$line" = "0" ]
+    then
+	to_path="$compilation/$package"
+	path="$compilation/$package/$new.h"
+    else
+	to_path="$compilation"
+	path="$compilation/$new.h"
+    fi
+
+    change_header
+
+    load_import
+
+    flags="CFLAGS += -I"$package/
+
+    echo -e "$flags\n$(cat $compilation/Makefile)" > $compilation/Makefile
+
+done
+
+#
+# echo "Compiling files:"
+# for index in ${!arr[*]}
+# do
+#
+#
+# done
+
+echo -e "NAME = $name\n$(cat $compilation/Makefile)" > $compilation/Makefile
+
+touch $compilation/main.c
+
+main=$(basename `grep -Rl "default(" --include=*.h`)
+
+echo "#include \"$main\"" > $compilation/main.c
+
+cd $compilation && make && mv $name ../ && cd ..
+
+rm -rf $compilation/
