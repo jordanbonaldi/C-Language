@@ -4,6 +4,8 @@ arr=($(grep -R "package" --include=*.j | cut -d':' -f1))
 
 compilation=".tmp_compilation"
 
+make_path=/usr/include/clang_core/Makefile
+
 mkdir $compilation
 
 count_lines()
@@ -42,6 +44,8 @@ change_header()
     fi
 }
 
+cp $make_path $compilation/.
+
 echo "Looking for files:"
 for index in ${!arr[*]}
 do
@@ -61,7 +65,10 @@ do
 
     change_header
 
+    echo "CFLAGS += -I" $package/ >> $compilation/Makefile
+
 done
+
 #
 # echo "Compiling files:"
 # for index in ${!arr[*]}
@@ -70,16 +77,14 @@ done
 #
 # done
 
+$(echo "NAME = a.out" >> $compilation/Makefile)
+
 touch $compilation/main.c
 
 main=$(basename `grep -Rl "default(" --include=*.h`)
 
 echo "#include \"$main\"" > $compilation/main.c
 
-toto="tot"
-
-toto=toto " tt"
-
-echo $toto
+cd $compilation && make
 
 #rm -rf $compilation

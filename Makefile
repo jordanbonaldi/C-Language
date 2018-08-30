@@ -29,9 +29,11 @@ PATH_PROJECT = project/
 
 PATH_CORE = $(PATH_PROJECT)$(FILE)/
 
+MAKE_FILE = $(PATH_PROJECT).install/Makefile
+
 NAME = libclang.so
 
-SRCS = project/main.c
+SRCS = $(PATH_PROJECT)main.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -47,6 +49,7 @@ remove_if_exist:
 
 transfer: remove_if_exist
 	cp $(NAME) $(PATH_LIB).
+	cp $(MAKE_FILE) $(PATH_INCLUDE_CORE)
 	cp -R $(PATH_CORE)* $(PATH_INCLUDE_CORE).
 	cp $(PATH_PROJECT)$(MAIN_HEADER) $(PATH_INCLUDE).
 
