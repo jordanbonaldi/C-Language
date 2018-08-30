@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+
+arr=($(grep -R "package" --include=*.j | cut -d':' -f1))
+
+compilation=".tmp_compilation"
+
+mkdir $compilation
+
+count_lines()
+{
+    empty=$(echo $1 | wc | cut -d' ' -f14)
+
+    if [ "$empty" = "0" ]
+    then
+        line=0
+    else
+        line=$(echo $1 | wc -l)
+    fi
+}
+
+get_lines()
+{
+    cmd=$(echo $1 | grep -o "/")
+    count_lines $cmd
+}
+
+change_header()
+{
+    replace="# package $package"
+    first=$(echo $package | cut -d' ' -f1)
+    define="sync"_$first
+
+    if [ "$line" = "0" ]
+    then
+        mv $compilation/$package/${arr[$index]} $compilation/$package/$new.h
+        sed -i "s/$replace/#ifndef $define\n#define $define\n\n#include <clangh.h>/g" $compilation/$package/$new.h
+        echo "#endif" >> $compilation/$package/$new.h
+    else
+        mv $compilation/${arr[$index]} $compilation/$new.h
+        sed -i "s/$replace/#ifndef $define\n#define $define\n\n#include <clangh.h>/g" $compilation/$new.h
+        echo "#endif" >> $compilation/$new.h
+    fi
+}
+
+echo "Looking for files:"
+for index in ${!arr[*]}
+do
+    package=$(grep "package" ${arr[$index]} | cut -d' ' -f3)
+
+    printf "Refactoring file %s in package %s\n\n" ${arr[$index]} $package
+
+    printf "\tSynchronisation of package %s\n\n" $package
+
+    mkdir $compilation/$package
+
+    cp ${arr[$index]} $compilation/$package/.
+
+    new=$(echo ${arr[$index]} | cut -d'.' -f1)
+
+    get_lines ${arr[$index]}
+
+    change_header
+
+done
+
+echo "Compiling files:"
+for index in ${!arr[*]}
+do
+    package=$(grep "package" ${arr[$index]} | cut -d' ' -f3)
+
+    printf "Refactoring file %s in package %s\n\n" ${arr[$index]} $package
+
+    printf "\tSynchronisation of package %s\n\n" $package
+
+    mkdir $compilation/$package
+
+    cp ${arr[$index]} $compilation/$package/.
+
+    new=$(echo ${arr[$index]} | cut -d'.' -f1)
+
+    get_lines ${arr[$index]}
+
+    change_header
+
+done
+
+#rm -rf $compilation

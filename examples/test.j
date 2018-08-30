@@ -1,4 +1,4 @@
-# include <clang.h>
+# package main
 
 # define $Object tar
 
@@ -30,11 +30,6 @@ private tar * function(init)
 	});
 
 	return toto;
-}
-
-public void function(test, String string)
-{
-	printf("%s\n", string);
 }
 
 private void function(toto)
