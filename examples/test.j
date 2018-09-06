@@ -2,9 +2,9 @@
 
 import file test_handler
 
-# define $Object test
+default Object is test
 
-$new Object
+create Object
 (
 	test,
 

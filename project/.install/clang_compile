@@ -72,6 +72,18 @@ load_import()
 	done
 }
 
+load_mainClass()
+{
+	imports=($(grep "default Object is" $path | cut -d' ' -f4))
+
+	if [[ ! -z "$imports" ]]
+        then
+		replace="default Object is "${imports}
+		echo "in " ${imports};
+        	sed -i "s/$replace/# define OBJ ${imports}/g" $path
+    	fi
+}
+
 cp $make_path $compilation/.
 
 echo "Looking for files:"
@@ -103,6 +115,8 @@ do
     change_header
 
     load_import
+
+    load_mainClass
 
     flags="CFLAGS += -I"$package/
 

@@ -36,6 +36,8 @@
 
 # define $new
 
+# define create
+
 $new Object
 (
 	DefaultObj,
@@ -48,8 +50,6 @@ $new Object
 	Container 	*queue;
 	Tests 		*tests;
 )
-
-# define OBJ $Object
 
 # define setObject(Obj, ...) (Obj) __VA_ARGS__
 
