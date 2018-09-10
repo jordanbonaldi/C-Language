@@ -59,7 +59,7 @@ $new Object
 
 # define null NULL
 
-$new Object
+create Object
 (
 	Unknown,
 

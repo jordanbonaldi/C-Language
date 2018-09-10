@@ -22,7 +22,7 @@
 # define READ_BUFFER(x) this->buffer->buff[(((size_t) this->buffer->read + x)\
 				- (size_t)this->buffer->buff) % __BUFFER_MAX_SIZE__]
 
-$new Object
+create Object
 (
 	Buffer,
 

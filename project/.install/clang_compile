@@ -124,14 +124,6 @@ do
 
 done
 
-#
-# echo "Compiling files:"
-# for index in ${!arr[*]}
-# do
-#
-#
-# done
-
 echo -e "NAME = $name\n$(cat $compilation/Makefile)" > $compilation/Makefile
 
 touch $compilation/main.c
