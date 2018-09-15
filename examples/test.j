@@ -2,31 +2,39 @@
 
 import file test_handler
 
-default Object is test
+import file player
+
+default Object is Test
 
 create Object
 (
-	test,
+	Test,
 
 	String test1;
 	String test2;
+
+	Player player;
 )
 
-private test * function(init)
+private Test * function(init)
 {
-	new(test)
-	alloc(_test, sizeof(test))
+	new(Test)
+	alloc(_test, sizeof(Test))
 
 	_test->test1 = "hello";
 	_test->test2 = "world";
+	_test->player = setObject(Player, { .id = 90 });
 
 	return _test;
 }
 
-import main(int, { call(init)})
+import main(int, { call(init) })
 
 default(int)
 {
-	printf("%s %s\n", use test1, use test2);
+	$>"%s %s" use test1, use test2
+
+	$>"Player id : %d" use player.id
+
 	return 0;
 }

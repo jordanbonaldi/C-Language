@@ -79,9 +79,29 @@ load_mainClass()
 	if [[ ! -z "$imports" ]]
 	then
 		replace="default Object is "${imports}
-		echo "in " ${imports};
 		sed -i "s/$replace/# define OBJ ${imports}/g" $path
 	fi
+}
+
+load_printf()
+{
+	IFS=$'\n'
+	printfs=( $(grep "$>" $path | cut -d'>' -f2) )
+
+	for ix in ${!printfs[*]}
+	do
+		id=${printfs[$ix]}
+		text=($(echo $id | cut -d'"' -f2))
+
+		args=($(echo $id | cut -d'"' -f3))
+
+		if [[ ! -z "$args" ]]
+		then
+			sed -i "s/$>$id/printf(\"$text\\\\n\", $args);/g" $path
+		else
+			sed -i "s/$>$id/printf(\"$text\\\\n\");/g" $path
+		fi
+	done
 }
 
 cp $make_path $compilation/.
@@ -117,6 +137,8 @@ do
 	load_import
 
 	load_mainClass
+
+	load_printf
 
 	flags="CFLAGS += -I"$package/
 

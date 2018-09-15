@@ -14,7 +14,7 @@ create test(test3_false)
 
 create initialisator
 {
-	$new define("true", test1_true)
-	$new define("false", test2_false)
-	$new define("false", test3_false)
+	create define("true", test1_true)
+	create define("false", test2_false)
+	create define("false", test3_false)
 }
