@@ -28,6 +28,7 @@
 	OBJECT_DEFINE(DefaultObj);
 	OBJECT_DEFINE(Buffer);
 	OBJECT_DEFINE(Container);
+	OBJECT_DEFINE(List);
 	OBJECT_DEFINE(DefaultObj);
 
 /*
@@ -47,7 +48,7 @@ $new Object
 	Socket 		*socket;
 	TimeManager 	*time;
 	Buffer 		*buffer;
-	Container 	*queue;
+	List 		*list;
 	Tests 		*tests;
 )
 

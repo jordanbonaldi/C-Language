@@ -36,7 +36,7 @@
 
 # define call(name, ...) PRE_FUNC_NAME##name(PARAM_NAMED VA_ARGS(__VA_ARGS__))
 
-# define get(name) PRE_FUNC_NAME##name
+# define getFnc(name) PRE_FUNC_NAME##name
 
 # define with_caller(caller, args) caller(PARAM_NAMED, args)
 
@@ -61,7 +61,7 @@
 					}\
 					OBJ *obj = __VA_ARGS__;\
 					setDefault(obj)\
-					t = launcher(this, argc, argc);\
+					t = launcher(this, argc, argv);\
 					free(obj);\
 					free(this);\
 					return t;\
