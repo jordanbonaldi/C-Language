@@ -14,6 +14,8 @@
 
 # define OBJECT_DEFINE(x) typedef struct s_##x x;
 
+# define future(x) typedef struct s_##x x;
+
 /*
 	Defining struct to allocating pre processing memory
 */

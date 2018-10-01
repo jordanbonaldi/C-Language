@@ -2,5 +2,7 @@
 
 create test(test1_true)
 {
-	return true;
+	Unknown unknown = use unknown;
+	$get(char, test1, alpha)
+	return equals(test1, "hello");
 }

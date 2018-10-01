@@ -4,12 +4,18 @@ import file test_true
 
 create test(test2_false)
 {
-	return false;
+	Unknown unknown = use unknown;
+	$get(char, test1, alpha)
+
+	return !equals(test1, "hell0");
 }
 
 create test(test3_false)
 {
-	return false;
+	Unknown unknown = use unknown;
+	$get(char, test1, beta)
+
+	return !equals(test1, "World");
 }
 
 create initialisator

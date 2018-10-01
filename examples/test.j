@@ -1,30 +1,29 @@
 # package main
 
-import file test_handler
-
-import file player
-
 default Object is Test
+
+future(Player)
 
 create Object
 (
 	Test,
 
-	String test1;
-	String test2;
+	Unknown unknown;
 
-	Player player;
+	Player * player;
 )
+
+import file player
+
+import file test_handler
 
 private Test * function(init)
 {
 	new(Test)
 	alloc(_test, sizeof(Test))
 
-	_test->test1 = "hello";
-	_test->test2 = "world";
-	_test->player = setObject(Player, { .id = 90 });
-
+	_test->unknown = setUnknown("hello", "world");
+	_test->player = call(initPlayer, 90);
 	return _test;
 }
 
@@ -32,9 +31,19 @@ import main(int, { call(init) })
 
 default(int)
 {
-	$>"%s %s" use test1, use test2
+	Unknown unknown = use unknown;
+	$get(char, test1, alpha)
+	$get(char, test2, beta)
 
-	$>"Player id : %d" use player.id
+	$>"%s %s" test1, test2
+
+	use player->setId(this, 9);
+
+	int id = use player->id;
+
+	$>"Player id : %d" id
+
+	free(use player);
 
 	return 0;
 }

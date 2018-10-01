@@ -22,7 +22,7 @@
 
 # define $d(a, b) a -= b;
 
-# define $equals(a, b) !strcmp(a, b)
+# define equals(a, b) !strcmp(a, b)
 
 # define $return(value) return (value);
 

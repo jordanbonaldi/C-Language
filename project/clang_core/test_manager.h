@@ -31,7 +31,7 @@ create Object
 # define initialisator public void function(init_test)
 
 # define define(n, f) {\
-				call(addTest, setTests(n, get(f)));\
+				call(addTest, setTests(n, getFnc(f)));\
 			}
 
 private int function(sizeTests)

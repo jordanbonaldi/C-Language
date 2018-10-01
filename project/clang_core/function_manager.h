@@ -51,16 +51,17 @@
 					new(MAIN_STRUCT)\
 					alloc(this, sizeof(MAIN_STRUCT))\
 					type t;\
-					if (argc == 2 && $equals(argv[1], "--test")) {\
+					OBJ *obj = __VA_ARGS__;\
+					setDefault(obj)\
+					if (argc == 2 && equals(argv[1], "--test")) {\
 						this->tests = null;\
 						call(init_test);\
 						call(launchTests);\
 						call(destroyTests);\
+						free(obj);\
 						free(this);\
 						return 0;\
 					}\
-					OBJ *obj = __VA_ARGS__;\
-					setDefault(obj)\
 					t = launcher(this, argc, argv);\
 					free(obj);\
 					free(this);\
