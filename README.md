@@ -29,7 +29,7 @@ create Object
 )
 ```
 **Import File**
-```java
+```ruby
 import file player
 ```
 **In file entity/player.j**
